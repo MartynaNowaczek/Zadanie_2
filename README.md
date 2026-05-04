@@ -69,15 +69,20 @@ explorer.exe http://localhost:8080
 ---
 
 ### Logi aplikacji
-![Logi](screenshots/Informacja_z_logów.png)
+![Logi](screenshots/Logi_aplikacji.png)
 
 ---
 
 ### Warstwy obrazu
-![Warstwy1](screenshots/Sprawdzenie_warstw_1.png)
+![Warstwy1](screenshots/Warstwy_obrazu.png)
 ![Warstwy2](screenshots/Sprawdzenie_warstw_2.png)
 
 ---
 
 ### Uruchomienie aplikacji
 ![Aplikacja](screenshots/Uruchomienie_aplikacji.png)
+
+---
+
+### Uruchomienie aplikacji
+![Aplikacja](screenshots/Aplikacja.png)
