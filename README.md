@@ -68,6 +68,12 @@ explorer.exe http://localhost:8080
 
 ---
 
+### Uruchomienie kontenera
+![PS](screenshots/docker_ps.png)
+
+---
+
+
 ### Logi aplikacji
 ![Logi](screenshots/Logi_aplikacji.png)
 
@@ -75,7 +81,7 @@ explorer.exe http://localhost:8080
 
 ### Warstwy obrazu
 ![Warstwy1](screenshots/Warstwy_obrazu.png)
-![Warstwy2](screenshots/Sprawdzenie_warstw_2.png)
+![Warstwy2](screenshots/Warstwy_obrazu.png)
 
 ---
 
