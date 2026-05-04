@@ -24,4 +24,21 @@ docker history weather-app
 ##### Uruchomienie aplikacji:
 explorer.exe http://localhost:8081
 
+###### Zrzuty ekranu:
+# Zbudowanie obrazu kontenera
+![Kontener](Zrzuty ekranu/Zbudowanie_obrazu_kontenera.png)
+
+# Uruchomienie kontenera
+![Kontener](Zrzuty ekranu/Uruchomienie_kontenera.png)
+
+# Logi aplikacji
+![Logi](Zrzuty ekranu/Informacja_z_logów.png)
+
+# Warstwy obrazu
+![Warstwy1](Zrzuty ekranu/Sprawdzenie_warstw_1.png)
+![Warstwy2](Zrzuty ekranu/Sprawdzenie_warstw_2.png)
+
+# Uruchomienie aplikacji
+![Uruchomienie](Zrzuty ekranu/Uruchomienie_aplikacji.png)
+
 
