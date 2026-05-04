@@ -1,44 +1,83 @@
 # Aplikacja pogodowa w Dockerze
 
-## Autor: Martyna Nowaczek
+Autor: Martyna Nowaczek  
 
-### Opis
+---
+
+## Opis
+
 Aplikacja webowa napisana w Pythonie (Flask)
 
-### Dostęp do aplikacji
+---
+
+## Dostęp do aplikacji
+
+Aplikacja dostępna jest pod adresem:
+
 http://localhost:8080
 
-#### Polecenia
-a. zbudowanie opracowanego obrazu kontenera:
+---
+
+## Polecenia
+
+### a) Zbudowanie obrazu kontenera
+
 docker build -t weather-app .
 
-b. Uruchomienie kontenera na podstawie zbudowanego obrazu:
+---
+
+### b) Uruchomienie kontenera
+
 docker run -d --name weather-app-container -p 8080:8080 weather-app
 
-c. Sposób uzyskania informacji z logów, które wygenerowała opracowana aplikacja podczas uruchamiana kontenera:
+---
+
+### c) Odczyt logów aplikacji
+
 docker logs weather-app-container
 
-d. Sprawdzenie, ile warstw posiada zbudowany obraz oraz jaki jest rozmiar obrazu:
-docker history weather-app
+Logi zawierają:
+- datę uruchomienia aplikacji  
+- autora  
+- port TCP (8080)  
 
-##### Uruchomienie aplikacji:
-explorer.exe http://localhost:8081
+---
 
-###### Zrzuty ekranu:
-# Zbudowanie obrazu kontenera
-![Kontener](Zrzuty ekranu/Zbudowanie_obrazu_kontenera.png)
+### d) Sprawdzenie warstw i rozmiaru obrazu
 
-# Uruchomienie kontenera
-![Kontener](Zrzuty ekranu/Uruchomienie_kontenera.png)
+docker history weather-app  
+docker images weather-app  
 
-# Logi aplikacji
-![Logi](Zrzuty ekranu/Informacja_z_logów.png)
+---
 
-# Warstwy obrazu
-![Warstwy1](Zrzuty ekranu/Sprawdzenie_warstw_1.png)
-![Warstwy2](Zrzuty ekranu/Sprawdzenie_warstw_2.png)
+## Uruchomienie aplikacji (WSL)
 
-# Uruchomienie aplikacji
-![Uruchomienie](Zrzuty ekranu/Uruchomienie_aplikacji.png)
+explorer.exe http://localhost:8080
 
+---
 
+## Zrzuty ekranu
+
+### Zbudowanie obrazu kontenera
+![Budowanie](screenshots/Zbudowanie_obrazu_kontenera.png)
+
+---
+
+### Uruchomienie kontenera
+![Kontener](screenshots/Uruchomienie_kontenera.png)
+
+---
+
+### Logi aplikacji
+![Logi](screenshots/Informacja_z_logów.png)
+
+---
+
+### Warstwy obrazu
+![Warstwy1](screenshots/Sprawdzenie_warstw_1.png)
+![Warstwy2](screenshots/Sprawdzenie_warstw_2.png)
+
+---
+
+### Uruchomienie aplikacji
+![Aplikacja](screenshots/Uruchomienie_aplikacji.png)
