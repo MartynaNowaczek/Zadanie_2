@@ -107,7 +107,7 @@ docker buildx imagetools inspect martynanowaczek/weather-app:buildcache-alpine
 
 ---
 
-## Test Trivy - raport w załączonym pliki
+## Test Trivy - raport w załączonym pliku
 
 docker run --rm \
   -v /var/run/docker.sock:/var/run/docker.sock \
@@ -154,10 +154,12 @@ docker run --rm \
 
 ---
 
-### Uruchomienie aplikacji
+### Wygląd aplikacji
 ![Aplikacja](screenshots/Aplikacja.png)
 
 ---
+
+# ZADANIE DODATKOWE
 
 ### Dostępność klucza do GitHuba
 ![Aplikacja](screenshots/Klucz_do_github.png)
@@ -168,7 +170,6 @@ docker run --rm \
 ![Aplikacja](screenshots/Ustawienie_sprawdzenie_multiarch_builder.png)
 
 ---
-
 
 ### Budowanie obrazu, utowrzenie manifestu, wypchnięcie obrazu na DockerHub, utworzenie cache
 ![Aplikacja](screenshots/Budowanie_obrazu.png)
@@ -185,7 +186,7 @@ docker run --rm \
 
 ---
 
-### Test Trivy - raport w załączonym pliki
+### Test Trivy 
 ![Aplikacja](screenshots/Raport_Trivy.png)
 
 ---
