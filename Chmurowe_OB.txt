@@ -1,5 +1,0 @@
-GitHub:
-https://github.com/MartynaNowaczek/Zadanie_1
-
-DockerHub:
-https://hub.docker.com/r/martynanowaczek/weather-app

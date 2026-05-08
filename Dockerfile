@@ -3,7 +3,7 @@
 # =========================
 # Etap 1: budowanie zależności
 # =========================
-FROM python:3.12-slim AS builder
+FROM python:3.12-alpine AS builder
 
 WORKDIR /app
 
@@ -33,7 +33,7 @@ COPY app.py .
 # =========================
 # Etap 2: obraz uruchomieniowy
 # =========================
-FROM python:3.12-slim AS runtime
+FROM python:3.12-alpine AS runtime
 
 # Etykiety zgodne ze standardem OCI
 LABEL org.opencontainers.image.authors="Martyna Nowaczek" \

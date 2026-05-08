@@ -1,0 +1,47 @@
+# syntax=docker/dockerfile:1.7
+
+FROM python:3.12-alpine AS builder
+
+WORKDIR /src
+
+RUN apk add --no-cache git openssh-client ca-certificates
+
+RUN mkdir -p -m 0700 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+RUN --mount=type=ssh \
+    git clone git@github.com:MartynaNowaczek/Zadanie_1.git .
+
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install --upgrade pip && pip install -r requirements.txt
+
+
+FROM python:3.12-alpine
+
+LABEL org.opencontainers.image.authors="Martyna Nowaczek"
+LABEL org.opencontainers.image.title="Weather App Multiarch"
+LABEL org.opencontainers.image.description="Aplikacja pogodowa Flask budowana z kodu z GitHub"
+LABEL org.opencontainers.image.source="https://github.com/MartynaNowaczek/Zadanie_1"
+
+WORKDIR /app
+
+COPY --from=builder /opt/venv /opt/venv
+COPY --from=builder /src/app.py .
+
+ENV PATH="/opt/venv/bin:$PATH"
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+
+RUN adduser -D -h /nonexistent appuser && \
+    chown -R appuser:appuser /app /opt/venv
+
+USER appuser
+
+EXPOSE 8080
+
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8080/health')" || exit 1
+
+CMD ["python", "app.py"]
