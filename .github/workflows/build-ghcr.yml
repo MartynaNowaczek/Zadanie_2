@@ -56,22 +56,21 @@ jobs:
             org.opencontainers.image.description=Weather application for Zadanie 2
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
 
-      - name: Build multiarch image to OCI archive for CVE scan
+            - name: Build image locally for CVE scan
         uses: docker/build-push-action@v6
         with:
           context: .
           file: ./Dockerfile
-          platforms: linux/amd64,linux/arm64
-          push: false
-          outputs: type=oci,dest=${{ env.OCI_ARCHIVE }}
+          platforms: linux/amd64
+          load: true
+          tags: weather-app:scan
           cache-from: type=registry,ref=${{ env.CACHE_IMAGE }}
-          cache-to: type=registry,ref=${{ env.CACHE_IMAGE }},mode=max
 
       - name: Scan image with Trivy
         uses: aquasecurity/trivy-action@v0.35.0
         with:
           scan-type: image
-          input: ${{ env.OCI_ARCHIVE }}
+          image-ref: weather-app:scan
           vuln-type: os,library
           severity: HIGH,CRITICAL
           exit-code: 1
