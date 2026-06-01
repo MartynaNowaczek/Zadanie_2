@@ -2,11 +2,11 @@
 
 
 
-\## GitHub Actions pipeline
+\## Opis rozwiązania
 
 
 
-Dla aplikacji z Zadania 1 przygotowano pipeline GitHub Actions budujący obraz kontenera, wykonujący skan CVE oraz publikujący obraz do GitHub Container Registry.
+W ramach zadania przygotowano pipeline GitHub Actions, który buduje obraz kontenera aplikacji z Zadania 1 na podstawie pliku `Dockerfile`, wykonuje test CVE oraz publikuje obraz do GitHub Container Registry.
 
 
 
@@ -22,19 +22,15 @@ Plik workflow:
 
 
 
-Pipeline został uruchomiony i zakończył się sukcesem.
+Workflow uruchamia się automatycznie po wykonaniu `push` na gałąź `main`. Można go również uruchomić ręcznie dzięki `workflow\_dispatch`.
 
 
 
-\---
+\## Repozytoria obrazów
 
 
 
-\## Obraz finalny GHCR
-
-
-
-Finalny obraz:
+\### Obraz finalny GHCR
 
 
 
@@ -46,39 +42,7 @@ ghcr.io/martynanowaczek/weather-app:alpine
 
 
 
-Tag powiązany z commitem:
-
-
-
-```txt
-
-ghcr.io/martynanowaczek/weather-app:alpine-sha-<commit>
-
-```
-
-
-
-Przykład:
-
-
-
-```txt
-
-ghcr.io/martynanowaczek/weather-app:alpine-sha-be87024
-
-```
-
-
-
-\---
-
-
-
-\## Cache BuildKit
-
-
-
-Cache BuildKit jest przechowywany w DockerHub:
+\### Cache BuildKit DockerHub
 
 
 
@@ -90,7 +54,57 @@ martynanowaczek/weather-app:buildcache-alpine
 
 
 
-W workflow użyto cache typu `registry` w trybie `mode=max`:
+\## Obsługiwane architektury
+
+
+
+Finalny obraz wspiera wymagane architektury:
+
+
+
+```txt
+
+linux/amd64
+
+linux/arm64
+
+```
+
+
+
+W workflow obraz multiarch publikowany jest w kroku:
+
+
+
+```txt
+
+Publish multiarch image to GHCR
+
+```
+
+
+
+Weryfikacja obrazu:
+
+
+
+```bash
+
+docker buildx imagetools inspect ghcr.io/martynanowaczek/weather-app:alpine
+
+```
+
+
+
+\## Cache BuildKit
+
+
+
+W pipeline wykorzystano cache BuildKit przechowywany w DockerHub. Dane cache są pobierane i wysyłane z użyciem backendu `registry` w trybie `mode=max`.
+
+
+
+Fragment konfiguracji:
 
 
 
@@ -104,53 +118,15 @@ cache-to: type=registry,ref=martynanowaczek/weather-app:buildcache-alpine,mode=m
 
 
 
-\---
-
-
-
-\## Multiarch
-
-
-
-Obraz wspiera dwie wymagane architektury:
-
-
-
-```txt
-
-linux/amd64
-
-linux/arm64
-
-```
-
-
-
-Weryfikacja manifestu:
-
-
-
-```bash
-
-docker buildx imagetools inspect ghcr.io/martynanowaczek/weather-app:alpine
-
-```
-
-
-
-\---
-
-
-
 \## Test CVE
 
 
 
-Do skanowania obrazu wykorzystano Trivy.
+Do testu CVE wykorzystano skaner Trivy.
 
 
 
-Skan wykonywany jest przed publikacją obrazu do GHCR. Pipeline blokuje publikację obrazu w przypadku podatności:
+Skan wykonywany jest przed publikacją obrazu do GHCR. Pipeline blokuje publikację obrazu, jeżeli zostaną wykryte podatności sklasyfikowane jako:
 
 
 
@@ -164,11 +140,13 @@ CRITICAL
 
 
 
-Ustawienia w workflow:
+Fragment konfiguracji Trivy:
 
 
 
 ```yaml
+
+vuln-type: os,library
 
 severity: HIGH,CRITICAL
 
@@ -178,61 +156,73 @@ exit-code: 1
 
 
 
-Skan wykonywany jest osobno dla:
+W workflow skan wykonywany jest osobno dla obu architektur:
 
 
 
 ```txt
 
-linux/amd64
+Scan amd64 image with Trivy
 
-linux/arm64
+Scan arm64 image with Trivy
 
 ```
 
 
 
-\---
+Dopiero po pozytywnym wyniku obu skanów wykonywany jest push obrazu do GHCR.
 
 
 
-\## Tagowanie
+\## Schemat tagowania
 
 
 
-| Element          | Tag                                                       |
+| Element                    | Tag                                                       |
 
-| ---------------- | --------------------------------------------------------- |
+| -------------------------- | --------------------------------------------------------- |
 
-| Obraz finalny    | `ghcr.io/martynanowaczek/weather-app:alpine`              |
+| Finalny obraz GHCR         | `ghcr.io/martynanowaczek/weather-app:alpine`              |
 
-| Obraz z commitem | `ghcr.io/martynanowaczek/weather-app:alpine-sha-<commit>` |
+| Obraz powiązany z commitem | `ghcr.io/martynanowaczek/weather-app:alpine-sha-<commit>` |
 
-| Cache BuildKit   | `martynanowaczek/weather-app:buildcache-alpine`           |
+| Cache BuildKit DockerHub   | `martynanowaczek/weather-app:buildcache-alpine`           |
 
 
 
 Tag `alpine` oznacza aktualny finalny obraz aplikacji.
 
-
-
 Tag `alpine-sha-<commit>` pozwala powiązać obraz z konkretną wersją kodu.
 
-
-
-Tag `buildcache-alpine` przechowuje cache BuildKit w DockerHub.
-
-
-
-\---
+Tag `buildcache-alpine` jest używany wyłącznie do przechowywania cache BuildKit.
 
 
 
-\## Potwierdzenie wykonania
+\## Uzasadnienie wyboru
 
 
 
-W udanym uruchomieniu pipeline wykonano kroki:
+Do skanowania CVE wybrano Trivy, ponieważ łatwo integruje się z GitHub Actions i pozwala zatrzymać pipeline przez `exit-code: 1`, jeżeli wykryte zostaną podatności o wskazanym poziomie ważności.
+
+
+
+Do cache BuildKit zastosowano backend `registry` z trybem `mode=max`, ponieważ pozwala przechowywać cache w zewnętrznym rejestrze DockerHub i wykorzystywać go pomiędzy kolejnymi uruchomieniami workflow.
+
+
+
+Zastosowano tag `alpine` jako czytelny tag obrazu finalnego oraz tag `alpine-sha-<commit>`, aby możliwe było jednoznaczne powiązanie obrazu z konkretną wersją kodu.
+
+
+
+\## Potwierdzenie działania
+
+
+
+Workflow został uruchomiony i zakończył się sukcesem.
+
+
+
+W udanym uruchomieniu wykonano kroki:
 
 
 
@@ -254,10 +244,6 @@ Verify published multiarch image
 
 
 
-\---
-
-
-
 \## Zrzuty ekranu z realizacji
 
 
@@ -266,11 +252,7 @@ Verify published multiarch image
 
 
 
-!\[Sekrety GitHub Actions](screenshots/01\_sekrety\_github\_actions.png)
-
-
-
-\---
+<img src="./screenshots/01\_sekrety\_github\_actions.png" alt="Sekrety GitHub Actions" width="900">
 
 
 
@@ -278,11 +260,7 @@ Verify published multiarch image
 
 
 
-!\[Utworzenie workflow](screenshots/02\_utworzenie\_workflow\_1.png)
-
-
-
-\---
+<img src="./screenshots/02\_utworzenie\_workflow\_1.png" alt="Utworzenie workflow" width="900">
 
 
 
@@ -290,11 +268,7 @@ Verify published multiarch image
 
 
 
-!\[Commit i push workflow](screenshots/03\_commit\_push\_workflow.png)
-
-
-
-\---
+<img src="./screenshots/03\_commit\_push\_workflow.png" alt="Commit i push workflow" width="900">
 
 
 
@@ -302,11 +276,7 @@ Verify published multiarch image
 
 
 
-!\[Udany run pipeline](screenshots/04\_udany\_run\_pipeline.png)
-
-
-
-\---
+<img src="./screenshots/04\_udany\_run\_pipeline.png" alt="Udany run pipeline" width="900">
 
 
 
@@ -314,11 +284,7 @@ Verify published multiarch image
 
 
 
-!\[Weryfikacja multiarch](screenshots/05\_weryfikacja\_multiarch.png)
-
-
-
-\---
+<img src="./screenshots/05\_weryfikacja\_multiarch.png" alt="Weryfikacja obrazu multiarch" width="900">
 
 
 
