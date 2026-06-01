@@ -212,6 +212,3 @@ Poprawność działania potwierdzono przez:
 
 <img src="screenshots/05_weryfikacja_multiarch.png" alt="Weryfikacja obrazu multiarch" width="900">
 
-### 6. Sprawdzenie cache BuildKit w dedykowanym repozytorium DockerHub
-
-<img src="screenshots/06_cache_dedykowane_repo.png" alt="Sprawdzenie cache BuildKit w dedykowanym repozytorium DockerHub" width="900">
