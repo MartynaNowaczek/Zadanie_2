@@ -1,3 +1,4 @@
+```yaml
 name: Build, scan and publish image to GHCR
 
 on:
@@ -12,7 +13,7 @@ permissions:
 
 env:
   GHCR_IMAGE: ghcr.io/${{ github.repository_owner }}/weather-app
-  CACHE_IMAGE: martynanowaczek/weather-app:buildcache-alpine
+  CACHE_IMAGE: martynanowaczek/weather-app-cache:buildcache-alpine
   AMD64_ARCHIVE: /tmp/weather-app-amd64.tar
   ARM64_ARCHIVE: /tmp/weather-app-arm64.tar
 
@@ -106,6 +107,8 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=registry,ref=${{ env.CACHE_IMAGE }}
           cache-to: type=registry,ref=${{ env.CACHE_IMAGE }},mode=max
+
       - name: Verify published multiarch image
         run: |
           docker buildx imagetools inspect ghcr.io/martynanowaczek/weather-app:alpine
+```
