@@ -13,7 +13,6 @@ permissions:
 env:
   GHCR_IMAGE: ghcr.io/${{ github.repository_owner }}/weather-app
   CACHE_IMAGE: martynanowaczek/weather-app:buildcache-alpine
-  OCI_ARCHIVE: /tmp/weather-app-oci.tar
 
 jobs:
   build-scan-publish:
@@ -56,7 +55,7 @@ jobs:
             org.opencontainers.image.description=Weather application for Zadanie 2
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
 
-            - name: Build image locally for CVE scan
+      - name: Build image locally for CVE scan
         uses: docker/build-push-action@v6
         with:
           context: .
