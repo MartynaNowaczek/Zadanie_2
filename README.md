@@ -4,6 +4,12 @@
 
 W ramach zadania przygotowano pipeline GitHub Actions, który buduje obraz kontenera aplikacji z Zadania 1 na podstawie pliku `Dockerfile`, wykonuje test CVE oraz publikuje obraz do GitHub Container Registry.
 
+Repozytorium:
+
+```txt
+https://github.com/MartynaNowaczek/Zadanie_2
+```
+
 Plik workflow:
 
 ```txt
