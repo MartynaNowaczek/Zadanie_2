@@ -1,4 +1,4 @@
-```yaml
+
 name: Build, scan and publish image to GHCR
 
 on:
@@ -111,4 +111,4 @@ jobs:
       - name: Verify published multiarch image
         run: |
           docker buildx imagetools inspect ghcr.io/martynanowaczek/weather-app:alpine
-```
+
