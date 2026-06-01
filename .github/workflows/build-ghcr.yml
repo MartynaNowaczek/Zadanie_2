@@ -106,3 +106,6 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=registry,ref=${{ env.CACHE_IMAGE }}
           cache-to: type=registry,ref=${{ env.CACHE_IMAGE }},mode=max
+      - name: Verify published multiarch image
+        run: |
+          docker buildx imagetools inspect ghcr.io/martynanowaczek/weather-app:alpine
