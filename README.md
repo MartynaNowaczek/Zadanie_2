@@ -244,47 +244,27 @@ Verify published multiarch image
 
 
 
-\## Zrzuty ekranu z realizacji
+\
 
 
+## Zrzuty ekranu z realizacji
 
-\### 1. Dodanie sekretów GitHub Actions
+### 1. Dodanie sekretów GitHub Actions
 
+<img src="screenshots/01_sekrety_github_actions.png" alt="Sekrety GitHub Actions" width="900">
 
+### 2. Utworzenie workflow
 
-<img src="./screenshots/01\_sekrety\_github\_actions.png" alt="Sekrety GitHub Actions" width="900">
+<img src="screenshots/02_utworzenie_workflow_1.png" alt="Utworzenie workflow" width="900">
 
+### 3. Commit i push workflow
 
+<img src="screenshots/03_commit_push_workflow.png" alt="Commit i push workflow" width="900">
 
-\### 2. Utworzenie workflow
+### 4. Udane wykonanie pipeline
 
+<img src="screenshots/04_udany_run_pipeline.png" alt="Udany run pipeline" width="900">
 
+### 5. Weryfikacja obrazu multiarch
 
-<img src="./screenshots/02\_utworzenie\_workflow\_1.png" alt="Utworzenie workflow" width="900">
-
-
-
-\### 3. Commit i push workflow
-
-
-
-<img src="./screenshots/03\_commit\_push\_workflow.png" alt="Commit i push workflow" width="900">
-
-
-
-\### 4. Udane wykonanie pipeline
-
-
-
-<img src="./screenshots/04\_udany\_run\_pipeline.png" alt="Udany run pipeline" width="900">
-
-
-
-\### 5. Weryfikacja obrazu multiarch
-
-
-
-<img src="./screenshots/05\_weryfikacja\_multiarch.png" alt="Weryfikacja obrazu multiarch" width="900">
-
-
-
+<img src="screenshots/05_weryfikacja_multiarch.png" alt="Weryfikacja obrazu multiarch" width="900">
