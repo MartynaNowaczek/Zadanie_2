@@ -212,14 +212,6 @@ Poprawność działania potwierdzono przez:
 
 <img src="screenshots/05_weryfikacja_multiarch.png" alt="Weryfikacja obrazu multiarch" width="900">
 
-### 6. Raport Trivy
+### 6. Sprawdzenie cache BuildKit w dedykowanym repozytorium DockerHub
 
-<img src="screenshots/Raport_Trivy.png" alt="Raport Trivy" width="900">
-
-### 7. Sprawdzenie cache BuildKit w dedykowanym repozytorium DockerHub
-
-<img src="screenshots/Sprawdzenie_cache_dedykowane_repo.png" alt="Sprawdzenie cache BuildKit w dedykowanym repozytorium DockerHub" width="900">
-
-### 8. Sprawdzenie manifestu obrazu
-
-<img src="screenshots/Sprawdzenie_manifestu.png" alt="Sprawdzenie manifestu obrazu" width="900">
+<img src="screenshots/06_cache_dedykowane_repo.png" alt="Sprawdzenie cache BuildKit w dedykowanym repozytorium DockerHub" width="900">
